@@ -7,9 +7,6 @@
 
     include("include/db_connect.php");
 
-    $first_name = $password = $confirm_password = $name = $email = '';
-    $username_err = $password_err = $confirm_password_err = $name_err = $email_err = '';
-
     if(isset($_POST['submit'])){
      
         $fname = $_POST['fname'];
