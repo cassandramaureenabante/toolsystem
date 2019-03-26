@@ -1,10 +1,6 @@
 <?php
     session_start();
 
-    $member_id = $_SESSION['id'];
-    
-	$member_name = $_SESSION['name'];
-
     include("include/db_connect.php");
 
     $position = '';
@@ -77,14 +73,8 @@
             <li class=""><a href="prepayment.php">Prepayment<span class="sr-only">&gt;</span></a></li>
             
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $member_name; ?> <span <!--span class="caret"--></span></a>
-                <ul class="dropdown-menu">
-                <li id="profile"><a href="profile.php">Profile Settings</a></li>
-                <li id="changepassword"><a href="changepassword.php">Change Password</a></li>
-                <li id="logout"><a href="login.php"> Log Out</a></li>
-                </ul>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-primary" href="login.php">Logout</a></button>
             </li>
         </ul>
     </div><!-- /.navbar-collapse --><!-- /.container-fluid -->
