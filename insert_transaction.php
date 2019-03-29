@@ -130,7 +130,6 @@
                                     </div>
                                     </div>
                  <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
-                 <button type="add" name="add" class="btn btn-success btn-block-sm">+</button>
              </div>
          </form>
 </body>
