@@ -14,8 +14,10 @@
         $borrower_id = $_POST['borrower'];
         $tools = $_POST['tools'];
         $quantity =$_POST['quantity'];
+        $date_borrowed =$_POST['date_borrowed'];
 
-        $update = "UPDATE transaction SET transaction_id='$transaction_id', borrower='$borrower_id',tools='$tools',quantity='$quantity' WHERE transaction_id = '$transaction_id'";
+
+        $update = "UPDATE transaction SET transaction_id='$transaction_id', borrower='$borrower_id',tools='$tools',quantity='$quantity', date_borrowed='$date_borrowed' WHERE transaction_id = '$transaction_id'";
 
     if (mysqli_query($conn, $update)) {
                 $sql1 = "SELECT quantity FROM tools WHERE tool_id='$tools'";
@@ -133,8 +135,8 @@
                                     </div>
                                       <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="quantity">Date Borrowed</label>
-                                                    <input type="date" class="form-control text-field" id="date" value="<?php echo $row[5]; ?>" name="date" placeholder="date">
+                                                    <label for="date_borrowed">Date Borrowed</label>
+                                                    <input type="date" class="form-control text-field" id="date" value="<?php echo $row[5]; ?>" name="date_borrowed" placeholder="date">
                                                 </div>
                                     <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
                                 </div>
