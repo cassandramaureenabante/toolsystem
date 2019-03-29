@@ -32,7 +32,7 @@
 			<script>
                 var msg = confirm('Borrower Updated');
                 if(msg == true || msg == false){
-                location.href='insert_borrower.php';
+                location.href='borrower.php';
                 }
             </script
         ";

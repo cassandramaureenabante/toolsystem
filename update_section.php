@@ -26,7 +26,7 @@
 			<script>
                 var msg = confirm('Section Updated');
                 if(msg == true || msg == false){
-                location.href='insert_section.php';
+                location.href='section.php';
                 }
             </script
         ";

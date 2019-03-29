@@ -26,7 +26,7 @@
 			<script>
                 var msg = confirm('Department Updated');
                 if(msg == true || msg == false){
-                location.href='insert_department.php';
+                location.href='department.php';
                 }
             </script
         ";

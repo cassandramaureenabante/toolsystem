@@ -20,7 +20,7 @@
             <script>
                     var msg = confirm('Department Inserted');
                     if(msg == true || msg == false){
-                        location.href='insert_department.php';
+                        location.href='department.php';
                     }
             </script
             ";

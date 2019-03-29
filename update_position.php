@@ -25,7 +25,7 @@
             <script>
                 var msg = confirm('Position Updated');
                 if(msg == true || msg == false){
-                location.href='insert_position.php';
+                location.href='position.php';
                 }
             </script
         ";

@@ -24,7 +24,7 @@
 	        <script>
                 var msg = confirm('Tools Updated');
                 if(msg == true || msg == false){
-                location.href='insert_tools.php';
+                location.href='tools.php';
                  }
             </script
         ";

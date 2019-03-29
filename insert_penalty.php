@@ -19,7 +19,7 @@
             <script>
                     var msg = confirm('Penalty Inserted');
                     if(msg == true || msg == false){
-                        location.href='insert_penalty.php';
+                        location.href='penalty.php';
                     }
             </script
             ";
