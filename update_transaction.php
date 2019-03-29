@@ -11,13 +11,19 @@
     
         if(isset($_POST['submit'])){
         
-        $transaction_id = $_POST['transaction_id'];
         $borrower_id = $_POST['borrower'];
         $tools = $_POST['tools'];
-        $quantity = $_POST['quantity'];
+        $quantity =$_POST['quantity'];
 
         $update = "UPDATE transaction SET transaction_id='$transaction_id', borrower='$borrower_id',tools='$tools',quantity='$quantity' WHERE transaction_id = '$transaction_id'";
+
     if (mysqli_query($conn, $update)) {
+                $sql1 = "SELECT quantity FROM tools WHERE tool_id='$tools'";
+                $result1 = mysqli_query($conn, $sql1);
+                $qty = mysqli_fetch_array($result1);
+                $newqty = $qty['quantity'] - $quantity;
+                $sql2 = "UPDATE tools SET quantity=$newqty WHERE tool_id='$tools'";
+                $result2 = mysqli_query($conn, $sql2);
     echo "
             <script>
                     var msg = confirm('Data Inserted');
@@ -93,7 +99,7 @@
             </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                    <?php
+                          <?php
                         $borrower = "SELECT * FROM `borrower` "; 
                         $query = mysqli_query($conn, $borrower);
                     ?>
@@ -111,35 +117,29 @@
                                                 $query = mysqli_query($conn, $tools);
                                             ?>
                                     <label for="tools">Tool Name</label>
-                            <select class="form-control" name="tools" placeholder="Name" autofocus required>
-                                    <option value=""></option>
-                                    <?php while ($row = mysqli_fetch_array($query)) { ?>
-                                                        <option value="<?php echo $row['tool_id']; ?>"> <?php echo ucfirst($row[1])?> </option>
+                                         <select class="form-control" name="tools" placeholder="Name" autofocus required>
+                                             <option value=""></option>
+                                                     <?php while ($row = mysqli_fetch_array($query)) { ?>
+                                                        <option value="<?php echo $row['tool_id']; ?>"> <?php echo ucfirst($row[1] )?> </option>
                                                      <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
-                                                <div class="col-sm-6">
-                                                <div class="form-group">
+                                     <div class="col-sm-6">
+                                        <div class="form-group">
                                             <label for="quantity">Quantity</label>
-                                            <select name="quantity" class="form-control" id="quantity" autofocus required>
-                                                <option value=""></option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                        </div>
+                                            <input type="text" class="form-control text-field" id="quantity" name="quantity" autofocus required>
                                     </div>
+                                    </div>
+                                      <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="quantity">Date Borrowed</label>
+                                                    <input type="date" class="form-control text-field" id="date" value="<?php echo $row[5]; ?>" name="date" placeholder="date">
+                                                </div>
+                                    <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
                                 </div>
-                 <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
-             </div>
+                            </div>
+      </div>
          </form>
 </body>
 </html>

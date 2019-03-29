@@ -81,7 +81,8 @@
                                     mysqli_free_result($fields);
                                 }
                             ?>  
-                                <th class="text-center" colspan="">Borrower ID</th>
+                                <th class="text-center" colspan="">Penalty ID</th>
+                                <th class="text-center" colspan="">Borrower Name</th>
                                 <th class="text-center" colspan="">Penalty Type</th>
                                 <th class="text-center" colspan="">Tool Name</th>
                                 <th class="text-center" colspan="">Quantity</th>
@@ -99,6 +100,7 @@
                             while ($row = mysqli_fetch_array($result)) { ?>
                             <tr class ="text-center">
                                 <td><?php echo $row['prepayment_id'] ?></td>
+                                <td><?php echo $row['first_name'].' '.$row['last_name'] ?></td>
                                 <td><?php echo $row['penaltyname'] ?></td>
                                 <td><?php echo $row['tool_name'] ?></td>
                                 <td><?php echo $row[4] ?></td>

@@ -80,10 +80,11 @@
                                 }
                             ?>  
                                 <th class="text-center" colspan="">Transaction ID</th>
-                                <th class="text-center" colspan="">Borrower ID</th>
+                                <th class="text-center" colspan="">Borrower Name</th>
                                 <th class="text-center" colspan="">Tool Name</th>
                                 <th class="text-center" colspan="">Quantity</th>
                                 <th class="text-center" colspan="">Date borrowed</th>
+                                <th class="text-center" colspan="">Date returned</th>
                                 <th class="text-center" colspan="3">Operation</th>
                             </tr>
                         </thead>
@@ -97,10 +98,11 @@
                             while ($row = mysqli_fetch_array($result)) { ?>
                             <tr class ="text-center">
                                 <td><?php echo $row['transaction_id'] ?></td>
-                                <td><?php echo $row['borrower_id'] ?></td>
+                                <td><?php echo $row['first_name'].' '.$row['last_name'] ?></td>
                                 <td><?php echo $row['tool_name'] ?></td>
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[5] ?></td>
+                                <td><?php echo $row[6] ?></td>
                                 <!-- <td> <a class="btn btn-info" href="view-contact.php?id=<?php echo $row[0] ?>">View </a> </td> -->
                                 <td> <a class="btn btn-success" href="update_transaction.php?id=<?php echo $row[0]; ?>">Update </a> </td>
                                 <td> <a class="btn btn-primary" href="delete_transaction.php?id=<?php echo $row[0];  ?>">Delete</a> </td

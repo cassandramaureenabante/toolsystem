@@ -18,6 +18,12 @@
         $sql = "INSERT INTO `prepayment` (`prepayment_id`, `borrower`, `tools`, `penalty`, `quantity`) VALUES (NULL, '$borrower','$tools', '$penalty','$quantity')";
         
         if (mysqli_query($conn, $sql)) {
+                $sql1 = "SELECT quantity FROM tools WHERE tool_id='$tools'";
+                $result1 = mysqli_query($conn, $sql1);
+                $qty = mysqli_fetch_array($result1);
+                $newqty = $qty['quantity'] - $quantity;
+                $sql2 = "UPDATE tools SET quantity=$newqty WHERE tool_id='$tools'";
+                $result2 = mysqli_query($conn, $sql2);
             echo "
             <script>
                     var msg = confirm('Data Inserted');
@@ -130,23 +136,10 @@
                                         </div>
                                                 <div class="col-sm-6">
                                                 <div class="form-group">
-                                            <label for="quantity">Quantity</label>
-                                            <select name="quantity" class="form-control" id="quantity" autofocus required>
-                                                <option value=""></option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
+                                                <label for="quantity">Quantity</label>
+                                                <input type="text" class="form-control text-field" id="quantity" name="quantity" autofocus required>
                                         </div>
                                     </div>
-                                </div>
                  <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
              </div>
          </form>

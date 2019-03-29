@@ -11,7 +11,7 @@
     
         if(isset($_POST['submit'])){
         
-        $prepayment_id = $_POST['prepayment_id'];
+       
         $borrower_id = $_POST['borrower'];
         $tools = $_POST['tools'];
         $penalty = $_POST['penalty'];
@@ -117,42 +117,36 @@
                                     <option value="<?php echo $row['penalty_id']; ?>"> <?php echo ucfirst($row[1])?> </option>
                                         <?php } ?>
                             </select>
-                                     <div class="col-sm-6">
+                                      <div class="col-sm-6">
                                      <div class="form-group">
                                             <?php
-                                                $tools = "select * from tools";
+                                                $tools =  "SELECT * FROM `tools` ";
                                                 $query = mysqli_query($conn, $tools);
                                             ?>
                                     <label for="tools">Tool Name</label>
-                            <select class="form-control" name="tools" placeholder="Name" autofocus required>
-                                    <option value=""></option>
-                                    <?php while ($row = mysqli_fetch_array($query)) { ?>
+                                         <select class="form-control" name="tools" placeholder="Name" autofocus required>
+                                             <option value=""></option>
+                                                     <?php while ($row = mysqli_fetch_array($query)) { ?>
                                                         <option value="<?php echo $row['tool_id']; ?>"> <?php echo ucfirst($row[1] )?> </option>
                                                      <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
-                                                <div class="col-sm-6">
-                                                <div class="form-group">
+                                     <div class="col-sm-6">
+                                        <div class="form-group">
                                             <label for="quantity">Quantity</label>
-                                            <select name="quantity" class="form-control" id="quantity" autofocus required>
-                                                <option value=""></option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                        </div>
+                                            <input type="text" class="form-control text-field" id="quantity" name="quantity" autofocus required>
                                     </div>
-                                </div>
-                 <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
-             </div>
-         </form>
+                                    </div>
+                                      <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="quantity">Date Borrowed</label>
+                                                    <input type="date" class="form-control text-field" id="date" value="<?php echo $row[5]; ?>" name="date" placeholder="date">
+                                                </div>
+                                    <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
+                </div>
+            </div>
+      </div>
+    </form>
 </body>
 </html>
