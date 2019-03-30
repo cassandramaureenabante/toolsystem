@@ -86,7 +86,7 @@
                                 <th class="text-center" colspan="">Penalty Type</th>
                                 <th class="text-center" colspan="">Tool Name</th>
                                 <th class="text-center" colspan="">Quantity</th>
-                                <th class="text-center" colspan="">Date-Charge</th>
+                                <th class="text-center" colspan="">Date Charge</th>
                                 <th class="text-center" colspan="3">Operation</th>
                             </tr>
                         </thead>
