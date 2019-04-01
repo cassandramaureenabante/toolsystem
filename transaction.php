@@ -84,6 +84,7 @@
                                 <th class="text-center" colspan="">Tool Name</th>
                                 <th class="text-center" colspan="">Quantity</th>
                                 <th class="text-center" colspan="">Date borrowed</th>
+                                <th class="text-center" colspan="">Date Returned</th>
                                 <th class="text-center" colspan="3">Operation</th>
                             </tr>
                         </thead>
@@ -92,15 +93,16 @@
                         <!-- data here -->
                         <tbody>
                             <?php 
-                            $sql = "select * from transaction,borrower,tools WHERE transaction.borrower = borrower.borrower_id AND transaction.tools=tools.tool_id ";
+                            $sql = "select transaction.transaction_id,borrower.first_name,borrower.last_name,tools.tool_name,sum(borrowed_tools.quantity),transaction.date_borrowed,transaction.date_returned from transaction,borrowed_tools,borrower,tools WHERE transaction.borrower = borrower.borrower_id AND transaction.transaction_id=borrowed_tools.transaction_id AND borrowed_tools.tools = tools.tool_id GROUP BY transaction.transaction_id";
                             $result = mysqli_query($conn, $sql);
                             while ($row = mysqli_fetch_array($result)) { ?>
                             <tr class ="text-center">
                                 <td><?php echo $row['transaction_id'] ?></td>
                                 <td><?php echo $row['first_name'].' '.$row['last_name'] ?></td>
                                 <td><?php echo $row['tool_name'] ?></td>
-                                <td><?php echo $row[3] ?></td>
-                                <td><?php echo $row[5] ?></td>
+                                <td><?php echo $row[4] ?></td>
+                                <td><?php echo date('d M Y',strtotime($row[5])) ?></td>
+                                <td><?php if($row[6] == "Not returned"){ echo $row[6]; }else{ echo date('d M Y', strtotime($row[6]));} ?></td>
                                 <!-- <td> <a class="btn btn-info" href="view-contact.php?id=<?php echo $row[0] ?>">View </a> </td> -->
                                 <td> <a class="btn btn-success" href="update_transaction.php?id=<?php echo $row[0]; ?>">Update </a> </td>
                                 <td> <a class="btn btn-primary" href="delete_transaction.php?id=<?php echo $row[0];  ?>">Delete</a> </td
@@ -112,19 +114,6 @@
                             
                             ?>
                         </tbody>
-
-                
-                                <tr>
-                                    <td scope="row"></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td scope="row"></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
                     </table>
                 </div>
             </div>

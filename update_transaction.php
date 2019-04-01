@@ -8,36 +8,22 @@
 
     $row = mysqli_fetch_array($get_transaction);
     
-    
-        if(isset($_POST['submit'])){
+if(isset($_POST['submit'])){
         
-        $borrower_id = $_POST['borrower'];
-        $tools = $_POST['tools'];
-        $quantity =$_POST['quantity'];
-        $date_borrowed =$_POST['date_borrowed'];
+        $date_returned =$_POST['date_returned'];
 
 
-        $update = "UPDATE transaction SET transaction_id='$transaction_id', borrower='$borrower_id',tools='$tools',quantity='$quantity', date_borrowed='$date_borrowed' WHERE transaction_id = '$transaction_id'";
-
-    if (mysqli_query($conn, $update)) {
-                $sql1 = "SELECT quantity FROM tools WHERE tool_id='$tools'";
-                $result1 = mysqli_query($conn, $sql1);
-                $qty = mysqli_fetch_array($result1);
-                $newqty = $qty['quantity'] - $quantity;
-                $sql2 = "UPDATE tools SET quantity=$newqty WHERE tool_id='$tools'";
-                $result2 = mysqli_query($conn, $sql2);
-    echo "
-            <script>
-                    var msg = confirm('Data Inserted');
+        $update = "UPDATE transaction SET date_returned='$date_returned' WHERE transaction_id = '$transaction_id'";
+      $result =  mysqli_query($conn, $update);
+      if($result == true){
+    echo "<script>var msg = confirm('Data Inserted');
                     if(msg == true || msg == false){
                         location.href='transaction.php';
                     }
             </script
             ";
-        } else {
-            echo "Error: " . $update . "<br>" . mysqli_error($conn);
         }
-    } 
+}
 ?>
 
 
@@ -102,41 +88,20 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                           <?php
-                        $borrower = "SELECT * FROM `borrower` "; 
+                          $transaction = $_GET['id'];
+                        $borrower = "SELECT first_name,last_name,borrower_id FROM transaction,`borrower` WHERE transaction.transaction_id = $transaction AND transaction.borrower=borrower.borrower_id GROUP BY transaction_id"; 
                         $query = mysqli_query($conn, $borrower);
                     ?>
                             <label form="borrower">Name</label>
                             <select class="form-control" name="borrower" placeholder="Name" autofocus required>
-                                    <option value=""></option>
                                         <?php while ($row = mysqli_fetch_array($query)) { ?>
-                                    <option value="<?php echo $row['borrower_id']; ?>"> <?php echo ucfirst($row[1]." ".$row[2])?> </option>
+                                    <option value="<?php echo $row['borrower_id']; ?>" selected> <?php echo ucfirst($row[0]." ".$row[1])?> </option>
                                         <?php } ?>
                             </select>
-                                     <div class="col-sm-6">
-                                     <div class="form-group">
-                                            <?php
-                                                $tools = "select * from tools";
-                                                $query = mysqli_query($conn, $tools);
-                                            ?>
-                                    <label for="tools">Tool Name</label>
-                                         <select class="form-control" name="tools" placeholder="Name" autofocus required>
-                                             <option value=""></option>
-                                                     <?php while ($row = mysqli_fetch_array($query)) { ?>
-                                                        <option value="<?php echo $row['tool_id']; ?>"> <?php echo ucfirst($row[1] )?> </option>
-                                                     <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                     <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="quantity">Quantity</label>
-                                            <input type="text" class="form-control text-field" id="quantity" name="quantity" autofocus required>
-                                    </div>
-                                    </div>
-                                      <div class="col-sm-6">
+                                      <div class="col-sm-14">
                                                 <div class="form-group">
-                                                    <label for="date_borrowed">Date Borrowed</label>
-                                                    <input type="date" class="form-control text-field" id="date" value="<?php echo $row[5]; ?>" name="date_borrowed" placeholder="date">
+                                                    <label for="date_returned">Date Returned</label>
+                                                    <input type="date" class="form-control" value="<?php echo $row[5] ?>" name="date_returned">
                                                 </div>
                                     <button type="submit" name="submit" class="btn btn-success btn-block-sm">Save</button>
                                 </div>
