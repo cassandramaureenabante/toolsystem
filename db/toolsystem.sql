@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2019 at 12:18 PM
+-- Generation Time: Apr 02, 2019 at 05:03 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -39,10 +39,9 @@ CREATE TABLE `borrowed_tools` (
 --
 
 INSERT INTO `borrowed_tools` (`transaction_id`, `tools`, `quantity`) VALUES
-(29, 6, 2),
-(29, 8, 3),
 (30, 8, 1),
-(31, 6, 2);
+(31, 6, 2),
+(33, 9, 20);
 
 -- --------------------------------------------------------
 
@@ -68,8 +67,8 @@ CREATE TABLE `borrower` (
 --
 
 INSERT INTO `borrower` (`borrower_id`, `first_name`, `last_name`, `department`, `section`, `position`, `member_id`, `contactnumber`, `email_address`, `Address`) VALUES
-(10, 'Jon', 'Snow', 8, 3, 2, 12, '0929231244', 'jonsnow@gmail.com', 'Winterfell'),
-(11, 'Arya', 'Stark', 8, 3, 3, 12, '0908230', 'aryae@gmail.com', 'daakd');
+(11, 'Arya', 'Stark', 8, 3, 3, 12, '0908230', 'aryae@gmail.com', 'daakd'),
+(13, 'Cersie', 'Lannister', 8, 4, 2, 0, '8326319303', 'cersielan@gmail.com', 'Capital');
 
 -- --------------------------------------------------------
 
@@ -175,9 +174,7 @@ CREATE TABLE `prepayment` (
 --
 
 INSERT INTO `prepayment` (`prepayment_id`, `borrower`, `penalty`, `tools`, `quantity`, `date`) VALUES
-(8, 10, 2, 8, '1', '2019-04-01 08:24:34'),
-(9, 11, 2, 8, '2', '2019-04-01 05:23:17'),
-(10, 11, 2, 6, '7', '2019-04-01 07:05:58');
+(9, 11, 2, 8, '2', '2019-04-01 05:23:17');
 
 -- --------------------------------------------------------
 
@@ -197,7 +194,9 @@ CREATE TABLE `section` (
 INSERT INTO `section` (`section_id`, `sectionname`) VALUES
 (3, '1A'),
 (4, '1B'),
-(5, '2A');
+(5, '2A'),
+(6, '4A'),
+(7, '3B');
 
 -- --------------------------------------------------------
 
@@ -217,8 +216,9 @@ CREATE TABLE `tools` (
 --
 
 INSERT INTO `tools` (`tool_id`, `tool_name`, `price`, `quantity`) VALUES
-(6, 'Crimper', '122.00', 12),
-(8, 'Hammer', '54.00', 49);
+(6, 'Crimper', '122.00', 11),
+(8, 'Hammer', '54.00', 47),
+(9, 'LED', '87.00', 180);
 
 -- --------------------------------------------------------
 
@@ -238,9 +238,9 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`transaction_id`, `borrower`, `date_borrowed`, `date_returned`) VALUES
-(29, 10, '2019-04-01 16:19:53', '2019-04-30'),
 (30, 11, '2019-04-01 16:30:43', '2019-04-20'),
-(31, 11, '2019-04-01 16:26:49', 'Not returned');
+(31, 11, '2019-04-02 10:57:45', '2019-04-27'),
+(33, 13, '2019-04-02 10:58:00', 'Not returned');
 
 --
 -- Indexes for dumped tables
@@ -250,8 +250,8 @@ INSERT INTO `transaction` (`transaction_id`, `borrower`, `date_borrowed`, `date_
 -- Indexes for table `borrowed_tools`
 --
 ALTER TABLE `borrowed_tools`
-  ADD KEY `transaction_id` (`transaction_id`),
-  ADD KEY `tools` (`tools`);
+  ADD KEY `tools` (`tools`),
+  ADD KEY `borrowed_tools_ibfk_1` (`transaction_id`);
 
 --
 -- Indexes for table `borrower`
@@ -323,7 +323,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `borrower`
 --
 ALTER TABLE `borrower`
-  MODIFY `borrower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `borrower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -359,19 +359,19 @@ ALTER TABLE `prepayment`
 -- AUTO_INCREMENT for table `section`
 --
 ALTER TABLE `section`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tools`
 --
 ALTER TABLE `tools`
-  MODIFY `tool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `tool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
@@ -381,30 +381,30 @@ ALTER TABLE `transaction`
 -- Constraints for table `borrowed_tools`
 --
 ALTER TABLE `borrowed_tools`
-  ADD CONSTRAINT `borrowed_tools_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`),
+  ADD CONSTRAINT `borrowed_tools_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `borrowed_tools_ibfk_2` FOREIGN KEY (`tools`) REFERENCES `tools` (`tool_id`);
 
 --
 -- Constraints for table `borrower`
 --
 ALTER TABLE `borrower`
-  ADD CONSTRAINT `borrower_ibfk_2` FOREIGN KEY (`section`) REFERENCES `section` (`section_id`),
-  ADD CONSTRAINT `borrower_ibfk_4` FOREIGN KEY (`department`) REFERENCES `department` (`department_id`),
-  ADD CONSTRAINT `borrower_ibfk_5` FOREIGN KEY (`position`) REFERENCES `position` (`position_id`);
+  ADD CONSTRAINT `borrower_ibfk_2` FOREIGN KEY (`section`) REFERENCES `section` (`section_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `borrower_ibfk_4` FOREIGN KEY (`department`) REFERENCES `department` (`department_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `borrower_ibfk_5` FOREIGN KEY (`position`) REFERENCES `position` (`position_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `prepayment`
 --
 ALTER TABLE `prepayment`
-  ADD CONSTRAINT `prepayment_ibfk_1` FOREIGN KEY (`penalty`) REFERENCES `penalty` (`penalty_id`),
-  ADD CONSTRAINT `prepayment_ibfk_2` FOREIGN KEY (`borrower`) REFERENCES `borrower` (`borrower_id`),
-  ADD CONSTRAINT `prepayment_ibfk_3` FOREIGN KEY (`tools`) REFERENCES `tools` (`tool_id`);
+  ADD CONSTRAINT `prepayment_ibfk_1` FOREIGN KEY (`penalty`) REFERENCES `penalty` (`penalty_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `prepayment_ibfk_2` FOREIGN KEY (`borrower`) REFERENCES `borrower` (`borrower_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `prepayment_ibfk_3` FOREIGN KEY (`tools`) REFERENCES `tools` (`tool_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`borrower`) REFERENCES `borrower` (`borrower_id`);
+  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`borrower`) REFERENCES `borrower` (`borrower_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
